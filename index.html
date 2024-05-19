@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main id="main-container">
+      <div id="form-container">
+        <form id="form" autocomplete="off">
+          <input id="note-title" placeholder="title" type="text" />
+          <input id="note-text" placeholder="text" type="text" />
+          <div id="form-buttons">
+            <button type="submit" id="submit-button">Submit</button>
+            <button type="button" id="form-close-button">Close</button>
+          </div>
+        </form>
+      </div>
+      <div id="notes"></div>
+      <div id="placeholder">
+        <p id="placeholder-text">Notes you add appear here</p>
+      </div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
