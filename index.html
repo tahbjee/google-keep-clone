@@ -8,19 +8,36 @@
   </head>
   <body>
     <main id="main-container">
-      <div id="form-container">
-        <form id="form" autocomplete="off">
-          <input id="note-title" placeholder="title" type="text" />
-          <input id="note-text" placeholder="text" type="text" />
-          <div id="form-buttons">
-            <button type="submit" id="submit-button">Submit</button>
-            <button type="button" id="form-close-button">Close</button>
-          </div>
-        </form>
+      <div class="modal">
+        <div class="modal-input">
+          <input id="modal-title" placeholder="title" type="text" />
+          <input id="modal-text" placeholder="text" type="text" />
+        </div>
+
+        <div id="modal-buttons">
+          <button type="submit" id="modal-submit-button">Submit</button>
+          <button type="button" id="modal-close-button">Close</button>
+        </div>
       </div>
-      <div id="notes"></div>
-      <div id="placeholder">
-        <p id="placeholder-text">Notes you add appear here</p>
+
+      <div class="main-container-content">
+        <div id="form-container">
+          <form id="form" autocomplete="off">
+            <div class="form-input">
+              <input id="note-title" placeholder="title" type="text" />
+              <input id="note-text" placeholder="text" type="text" />
+            </div>
+
+            <div id="form-buttons">
+              <button type="submit" id="submit-button">Submit</button>
+              <button type="button" id="form-close-button">Close</button>
+            </div>
+          </form>
+        </div>
+        <div id="notes"></div>
+        <div id="placeholder">
+          <p id="placeholder-text">Notes you add appear here</p>
+        </div>
       </div>
     </main>
 
