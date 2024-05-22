@@ -9,7 +9,7 @@
 body {
   margin: 0 auto;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 67, 5%;
+  font-size: 59%;
   width: 100vw;
   height: 100vh;
 }
@@ -82,7 +82,7 @@ button {
   border-radius: 5px;
 }
 #form input[type="text"] {
-  width: 700px;
+  width: 70vw;
 }
 
 .form-input {
@@ -101,19 +101,32 @@ button {
 /* .color-buttons {
   transition: all 0.4s ease-in;
 } */
+
+@media (max-width: 600px) {
+  .color-button-1,
+  .color-button-2,
+  .color-button-3 {
+    display: none;
+  }
+
+  button {
+    padding: 0.5em 1em;
+  }
+}
+
 .color-button-1:hover {
-  fill: blue;
-  color: blue;
+  fill: yellow;
+  color: yellow;
 }
 
 .color-button-2:hover {
-  fill: red;
-  color: red;
+  fill: green;
+  color: green;
 }
 
 .color-button-3:hover {
-  fill: yellow;
-  color: rgb(255, 255, 104);
+  fill: red;
+  color: red;
 }
 
 .form-buttons-content {
@@ -180,15 +193,12 @@ button {
   border-radius: 5px;
   gap: 8em;
   padding: 0 1em;
-  min-width: 400px;
+  min-width: 200px;
   min-height: 300px;
   top: 50%;
   right: 50%;
   transform: translate(50%, -50%);
   visibility: hidden;
-  /*   opacity: 0;
- */ /*   display: none;
- */
   z-index: 10012;
 }
 .modal input[type="text"] {
@@ -213,10 +223,11 @@ button {
 }
 
 #modal-buttons {
-  /*   display: flex;
-  justify-content: end; */
   gap: 0.5em;
   width: 100%;
+}
+.other-buttons {
+  gap: 3em;
 }
 
 .openModal {
@@ -226,8 +237,14 @@ button {
 .blur-main-container {
   filter: blur(1px);
   position: absolute;
-
   background-color: rgb(0, 0, 0, 0.09);
   width: 100vw;
   height: 100vh;
+}
+.remove-button {
+  display: none;
+}
+
+.note:hover .remove-button {
+  display: inline; /* Show the remove button when the note is hovered */
 }

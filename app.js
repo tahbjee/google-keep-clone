@@ -24,7 +24,19 @@ const modal = document.querySelector(".modal");
 const submitButton = document.querySelector("#submit-button");
 const modalSubmitButton = document.querySelector("#modal-submit-button");
 
+const blurMainContainer = document.querySelector(
+  ".main-container .blur-main-container"
+);
+
+const yellow = document.querySelector(".color-button-1");
+const green = document.querySelector(".color-button-2");
+const red = document.querySelector(".color-button-3");
+
+//
+
 let index;
+
+const noteElement = document.querySelector(`.note[data-note="${index}"]`);
 
 function Book() {}
 
@@ -35,8 +47,8 @@ function addBookToLibrary() {
     return title.length > 0 || text.length > 0;
   }
 
-  submitButton.addEventListener("click", (e) => {
-    e.preventDefault();
+  submitButton.addEventListener("click", (event) => {
+    event.preventDefault();
     if (hasUserInput()) {
       createNotes();
     }
@@ -45,16 +57,19 @@ function addBookToLibrary() {
   function createNotes(index) {
     const title = noteTitle.value.trim();
     const text = noteText.value.trim();
-    const newBook = { title, text };
+    const color = "";
+
+    const newBook = { title, text, color };
     myLibrary.push(newBook);
 
     if (title || text) {
       notes.innerHTML = myLibrary
         .map(
           (book, index) => `
-      <div class="note" data-note="${index}">
+      <div class="note" data-note="${index}"  style="background-color: ${book.color}">
         <h3>${book.title}</h3>
         <p>${book.text}</p>
+        <button class="remove-button">Remove</button>
       </div>
     `
         )
@@ -71,6 +86,11 @@ function addBookToLibrary() {
     modalTitle.value = "";
     modalText.value = "";
   }
+  function HasModalText() {
+    const modalTitleInput = modalTitle.value.trim();
+    const modalTextInput = modalText.value.trim();
+    return modalTitleInput.length > 0 || modalTextInput.length > 0;
+  }
 
   function updateNotes(index) {
     const noteElement = document.querySelector(`.note[data-note="${index}"]`);
@@ -80,6 +100,8 @@ function addBookToLibrary() {
 
     titleElement.textContent = myLibrary[index].title;
     textElement.textContent = myLibrary[index].text;
+
+    myLibrary[index].color = noteElement.style.backgroundColor;
   }
 
   function handleModal(event) {
@@ -133,6 +155,7 @@ function addBookToLibrary() {
 
   mainContainer.addEventListener("click", (event) => {
     const clickedElement = event.target;
+    console.log(clickedElement);
     event.preventDefault();
     if (clickedElement === noteText) {
       openForm();
@@ -143,15 +166,55 @@ function addBookToLibrary() {
     } else if (clickedElement === mainContainerContent && hasUserInput()) {
       createNotes();
       closeForm();
-    } else if (clickedElement === mainContainer && !hasUserInput()) {
+    } else if (
+      (clickedElement === mainContainerContent ||
+        clickedElement === mainContainerContent) &&
+      !hasUserInput()
+    ) {
       closeForm();
     } else if (clickedElement.closest(".note")) {
-      //   event.stopPropagation();
       openModal();
       handleModal(event);
     } else if (clickedElement === closeModalButton) {
       closeModal();
+    } else if (
+      clickedElement === blurMainContainer ||
+      clickedElement === notes ||
+      clickedElement === mainContainer ||
+      clickedElement === mainContainerContent
+    ) {
+      closeModal();
+    } else if (clickedElement === yellow || red || green) {
+      const noteElement = document.querySelector(`.note[data-note="${index}"]`);
+      if (clickedElement === yellow) {
+        noteElement.style.backgroundColor = "yellow";
+      } else if (clickedElement === red) {
+        noteElement.style.backgroundColor = "red";
+      } else if (clickedElement === green) {
+        noteElement.style.backgroundColor = "green";
+      }
     }
+  });
+
+  yellow.addEventListener("click", () => {
+    const noteElement = document.querySelector(`.note[data-note="${index}"]`);
+
+    noteElement.style.backgroundColor = "yellow";
+    myLibrary[index].color = "yellow";
+  });
+
+  red.addEventListener("click", () => {
+    const noteElement = document.querySelector(`.note[data-note="${index}"]`);
+
+    noteElement.style.backgroundColor = "red";
+    myLibrary[index].color = "red";
+  });
+
+  green.addEventListener("click", () => {
+    const noteElement = document.querySelector(`.note[data-note="${index}"]`);
+
+    noteElement.style.backgroundColor = "green";
+    myLibrary[index].color = "green";
   });
 }
 addBookToLibrary();
