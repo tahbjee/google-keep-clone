@@ -24,13 +24,11 @@ const modal = document.querySelector(".modal");
 const submitButton = document.querySelector("#submit-button");
 const modalSubmitButton = document.querySelector("#modal-submit-button");
 
-function Book() {
-  // the constructor..
-}
+let index;
+
+function Book() {}
 
 function addBookToLibrary() {
-  // do stuff here
-
   function hasUserInput() {
     const title = noteTitle.value.trim();
     const text = noteText.value.trim();
@@ -44,7 +42,7 @@ function addBookToLibrary() {
     }
   });
 
-  function createNotes(event) {
+  function createNotes(index) {
     const title = noteTitle.value.trim();
     const text = noteText.value.trim();
     const newBook = { title, text };
@@ -73,18 +71,6 @@ function addBookToLibrary() {
     modalTitle.value = "";
     modalText.value = "";
   }
-  /*   function createModalText(event) {
-    let index = event.target.dataset.note;
-    modalTitle.value = myLibrary[index].title;
-    modalText.value = myLibrary[index].text;
-  }
-
-  function editModalText(event) {
-    let index = event.target.dataset.note;
-    console.log("index:" + index);
-    myLibrary[index].title = modalTitle.value;
-    myLibrary[index].text = modalText.value;
-  } */
 
   function updateNotes(index) {
     const noteElement = document.querySelector(`.note[data-note="${index}"]`);
@@ -97,23 +83,30 @@ function addBookToLibrary() {
   }
 
   function handleModal(event) {
-    let index = event.target.dataset.note;
+    index = event.target.dataset.note;
     modalTitle.value = myLibrary[index].title;
     modalText.value = myLibrary[index].text;
+    console.log(
+      "event.target.dataset.note " +
+        event.target.dataset.note +
+        " index " +
+        index
+    );
+  }
 
-    console.log("handleModal: index " + index);
-
-    modalSubmitButton.addEventListener("click", () => {
-      const currentIndex = index;
-      console.log("handleModal: currentIndex " + currentIndex);
+  modalSubmitButton.addEventListener("click", () => {
+    const currentIndex = index;
+    console.log("handleModal: currentIndex " + currentIndex);
+    if (currentIndex >= 0 && currentIndex < myLibrary.length) {
       myLibrary[currentIndex].title = modalTitle.value;
       myLibrary[currentIndex].text = modalText.value;
-      //console.log("modalTitle:" + modalTitle.value);
-      //  console.log("modalText:" + modalText.value);
+
       updateNotes(currentIndex);
       closeModal();
-    });
-  }
+    } else {
+      console.error("Invalid index:", currentIndex);
+    }
+  });
 
   function openForm(event) {
     noteTitle.style.display = "block";
@@ -159,8 +152,6 @@ function addBookToLibrary() {
     } else if (clickedElement === closeModalButton) {
       closeModal();
     }
-    //  console.log(event.target);
   });
-  // console.log(myLibrary);
 }
 addBookToLibrary();

@@ -97,6 +97,30 @@ button {
 #form-buttons {
   padding: 1em;
 }
+
+/* .color-buttons {
+  transition: all 0.4s ease-in;
+} */
+.color-button-1:hover {
+  fill: blue;
+  color: blue;
+}
+
+.color-button-2:hover {
+  fill: red;
+  color: red;
+}
+
+.color-button-3:hover {
+  fill: yellow;
+  color: rgb(255, 255, 104);
+}
+
+.form-buttons-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 #form-close-button {
   background-color: transparent;
 }
@@ -127,6 +151,7 @@ button {
   flex-wrap: wrap;
   word-break: break-all;
   gap: 1em;
+  width: 100%;
 }
 
 .note {
@@ -140,9 +165,9 @@ button {
   letter-spacing: 1.4px;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   padding: 1em;
-  min-width: 300px;
-  max-width: 600px;
-  min-height: 150px;
+  width: 15%;
+  min-width: 200px;
+  min-height: 200px;
 }
 
 .modal {
@@ -188,8 +213,8 @@ button {
 }
 
 #modal-buttons {
-  display: flex;
-  justify-content: end;
+  /*   display: flex;
+  justify-content: end; */
   gap: 0.5em;
   width: 100%;
 }
