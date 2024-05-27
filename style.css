@@ -98,9 +98,13 @@ button {
   padding: 1em;
 }
 
-/* .color-buttons {
-  transition: all 0.4s ease-in;
-} */
+
+.form-buttons-content {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 2em;
+}
 
 @media (max-width: 600px) {
   .color-button-1,
@@ -111,6 +115,15 @@ button {
 
   button {
     padding: 0.5em 1em;
+  }
+
+  .form-buttons-content {
+    display: flex;
+    justify-content: center;
+  }
+
+  .other-buttons {
+    gap: 2.5em;
   }
 }
 
@@ -129,11 +142,6 @@ button {
   color: red;
 }
 
-.form-buttons-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 #form-close-button {
   background-color: transparent;
 }
@@ -163,7 +171,7 @@ button {
   flex-direction: row;
   flex-wrap: wrap;
   word-break: break-all;
-  gap: 1em;
+  gap: 2em;
   width: 100%;
 }
 
@@ -173,14 +181,15 @@ button {
   align-items: center;
   flex-direction: column;
   overflow-wrap: break-word;
-  gap: 1em;
+  gap: 2em;
   font-size: 1.4rem;
   letter-spacing: 1.4px;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   padding: 1em;
-  width: 15%;
-  min-width: 200px;
+  width: 20%;
+  min-width: 300px;
   min-height: 200px;
+  z-index: 1000;
 }
 
 .modal {
@@ -223,7 +232,7 @@ button {
 }
 
 #modal-buttons {
-  gap: 0.5em;
+  gap: 1em;
   width: 100%;
 }
 .other-buttons {
@@ -243,8 +252,19 @@ button {
 }
 .remove-button {
   display: none;
+  text-align: end;
 }
 
 .note:hover .remove-button {
-  display: inline; /* Show the remove button when the note is hovered */
+  display: inline;
+}
+
+.color-buttons {
+  display: flex;
+  gap: 0.5em;
+}
+
+.other-buttons {
+  display: flex;
+  gap: 1em;
 }

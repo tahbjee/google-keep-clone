@@ -1,4 +1,7 @@
-const myLibrary = [];
+// const myLibrary = [];
+const myLibrary = JSON.parse(localStorage.getItem("note")) || [];
+
+const removeNotes = document.querySelector("#remove-button");
 
 const notes = document.querySelector("#notes");
 let noteTitle = document.querySelector("#note-title");
@@ -36,7 +39,7 @@ const red = document.querySelector(".color-button-3");
 
 let index;
 
-const noteElement = document.querySelector(`.note[data-note="${index}"]`);
+const noteElement = document.querySelector(`[data-note="${index}"]`);
 
 function Book() {}
 
@@ -54,6 +57,28 @@ function addBookToLibrary() {
     }
   });
 
+  function loadNotesFromLocalStorage() {
+    const storedNotes = JSON.parse(localStorage.getItem("notes"));
+    console.log(storedNotes);
+    if (storedNotes) {
+      myLibrary.push(...storedNotes);
+      renderNotes();
+    }
+  }
+
+  function renderNotes() {
+    notes.innerHTML = myLibrary
+      .map(
+        (book, index) => `
+      <div class="note" data-note="${index}"  style="background-color: ${book.color}">
+        <h3 data-note="${index}">${book.title}</h3>
+        <p data-note="${index}">${book.text}</p>
+      </div>
+    `
+      )
+      .join(" ");
+  }
+
   function createNotes(index) {
     const title = noteTitle.value.trim();
     const text = noteText.value.trim();
@@ -63,19 +88,18 @@ function addBookToLibrary() {
     myLibrary.push(newBook);
 
     if (title || text) {
-      notes.innerHTML = myLibrary
-        .map(
-          (book, index) => `
-      <div class="note" data-note="${index}"  style="background-color: ${book.color}">
-        <h3>${book.title}</h3>
-        <p>${book.text}</p>
-        <button class="remove-button">Remove</button>
-      </div>
-    `
-        )
-        .join(" ");
+      renderNotes();
+      saveToLocalStorage();
       clearInputText();
     }
+  }
+
+  function saveToLocalStorage() {
+    localStorage.setItem("notes", JSON.stringify(myLibrary));
+  }
+
+  function removeFromLocalStorage(index) {
+    localStorage.removeItem(index);
   }
   function clearInputText() {
     noteTitle.value = "";
@@ -104,18 +128,6 @@ function addBookToLibrary() {
     myLibrary[index].color = noteElement.style.backgroundColor;
   }
 
-  function handleModal(event) {
-    index = event.target.dataset.note;
-    modalTitle.value = myLibrary[index].title;
-    modalText.value = myLibrary[index].text;
-    console.log(
-      "event.target.dataset.note " +
-        event.target.dataset.note +
-        " index " +
-        index
-    );
-  }
-
   modalSubmitButton.addEventListener("click", () => {
     const currentIndex = index;
     console.log("handleModal: currentIndex " + currentIndex);
@@ -129,6 +141,17 @@ function addBookToLibrary() {
       console.error("Invalid index:", currentIndex);
     }
   });
+  /*  removeNotes.addEventListener("click", () => {
+     delete myLibrary[index].title;
+    delete myLibrary[index].text;
+    delete myLibrary[index].color;
+     
+    noteElement.remove();
+
+    // Remove the corresponding object from myLibrary array
+    myLibrary.splice(index, 1);
+    saveToLocalStorage();
+  }); */
 
   function openForm(event) {
     noteTitle.style.display = "block";
@@ -155,8 +178,11 @@ function addBookToLibrary() {
 
   mainContainer.addEventListener("click", (event) => {
     const clickedElement = event.target;
+    const noteElement = document.querySelector(`.note[data-note="${index}"]`);
+
     console.log(clickedElement);
     event.preventDefault();
+
     if (clickedElement === noteText) {
       openForm();
     } else if (clickedElement === closeFormButton) {
@@ -172,10 +198,14 @@ function addBookToLibrary() {
       !hasUserInput()
     ) {
       closeForm();
-    } else if (clickedElement.closest(".note")) {
+    } else if (
+      clickedElement.closest(".note") ||
+      clickedElement === noteElement
+    ) {
       openModal();
       handleModal(event);
     } else if (clickedElement === closeModalButton) {
+      clearModalInputText();
       closeModal();
     } else if (
       clickedElement === blurMainContainer ||
@@ -184,37 +214,37 @@ function addBookToLibrary() {
       clickedElement === mainContainerContent
     ) {
       closeModal();
+    } else if (clickedElement === removeNotes) {
+      myLibrary.splice(index, 1);
+      removeFromLocalStorage(noteElement);
+      saveToLocalStorage();
+      renderNotes();
+      closeModal();
     } else if (clickedElement === yellow || red || green) {
-      const noteElement = document.querySelector(`.note[data-note="${index}"]`);
       if (clickedElement === yellow) {
         noteElement.style.backgroundColor = "yellow";
+        myLibrary[index].color = "yellow";
+        saveToLocalStorage();
       } else if (clickedElement === red) {
         noteElement.style.backgroundColor = "red";
+        myLibrary[index].color = "red";
+        saveToLocalStorage();
       } else if (clickedElement === green) {
         noteElement.style.backgroundColor = "green";
+        myLibrary[index].color = "green";
+        saveToLocalStorage();
       }
     }
   });
 
-  yellow.addEventListener("click", () => {
-    const noteElement = document.querySelector(`.note[data-note="${index}"]`);
-
-    noteElement.style.backgroundColor = "yellow";
-    myLibrary[index].color = "yellow";
-  });
-
-  red.addEventListener("click", () => {
-    const noteElement = document.querySelector(`.note[data-note="${index}"]`);
-
-    noteElement.style.backgroundColor = "red";
-    myLibrary[index].color = "red";
-  });
-
-  green.addEventListener("click", () => {
-    const noteElement = document.querySelector(`.note[data-note="${index}"]`);
-
-    noteElement.style.backgroundColor = "green";
-    myLibrary[index].color = "green";
+  function handleModal(event) {
+    index = event.target.dataset.note;
+    modalTitle.value = myLibrary[index].title;
+    modalText.value = myLibrary[index].text;
+  }
+  window.addEventListener("load", () => {
+    loadNotesFromLocalStorage();
+    renderNotes();
   });
 }
 addBookToLibrary();
